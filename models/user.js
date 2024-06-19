@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
-  name: {
+  uid: {
     type: String,
     required: true,
+    unique: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
   },
-  password: {
+  name: {
     type: String,
     required: true,
   },
@@ -17,7 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  freindRequests: [
+  friendRequests: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -37,6 +38,7 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+userSchema.index({ uid: 1 }, { unique: true });
 
 const User = mongoose.model("User",userSchema);
 

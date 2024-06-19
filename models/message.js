@@ -1,17 +1,27 @@
 const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema({
+  chatRoomId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'ChatRoom', 
+    required: true,
+  },
   senderId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
-  recepientId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
+  recepientIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  ],
   messageType: {
     type: String,
     enum: ["text", "image"],
+    required: true,
   },
   message: String,
   imageUrl: String,
@@ -21,6 +31,6 @@ const messageSchema = new mongoose.Schema({
   },
 });
 
-const Message = mongoose.model('Message',messageSchema);
+const Message = mongoose.model('Message', messageSchema);
 
 module.exports = Message;
